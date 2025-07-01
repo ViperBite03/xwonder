@@ -1,0 +1,72 @@
+---
+import Menu from '@/modules/landing/components/Menu.vue'
+import Footer from '@/modules/landing/components/Footer.vue'
+// import CookieConsent from '@/modules/shared/components/CookieConsent.svelte'
+
+export interface Props {
+  title: string
+  description: string
+  subtitle?: string
+}
+
+const props = Astro.props
+
+const title = props.title
+const subtitle = props.subtitle
+const description = props.description
+
+const canonicalUrl = Astro.site.origin + Astro.url.pathname
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="view-transition" content="same-origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/logo.webp" />
+    <meta property="og:url" content="https://www.tramita.info/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/webp" href="/assets/logo.webp" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <!-- Microsoft Clarity on CookieConsent -->
+  </head>
+  <body>
+    <Menu />
+    <slot />
+    <Footer />
+
+    <style lang="scss" is:global>
+      @use '@/sass/global.scss';
+    </style>
+  </body>
+</html>
+
+<script>
+    /* --- Smooth Scroll --- */
+    import Lenis from 'lenis'
+    import 'lenis/dist/lenis.css'
+  
+    const lenis = new Lenis()
+  
+    // Use requestAnimationFrame to continuously update the scroll
+    const raf = (time) => {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+  
+      const isInterruptorSectionInDark =
+        document.body.classList.contains('dark-mode') && window.location.pathname === '/' && window.scrollY < 200
+  
+      if (isInterruptorSectionInDark) lenis.stop()
+      else lenis.start()
+    }
+  
+    requestAnimationFrame(raf)
+  </script>
