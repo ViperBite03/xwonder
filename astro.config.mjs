@@ -5,9 +5,9 @@ import sitemap from '@astrojs/sitemap'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
-import vue from '@astrojs/vue';
+import vue from '@astrojs/vue'
 
-import vercel from '@astrojs/vercel';
+import vercel from '@astrojs/vercel'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -16,7 +16,9 @@ const __dirname = path.dirname(__filename)
 export default defineConfig({
   site: 'https://example.com',
   integrations: [mdx(), sitemap(), vue()],
-
+  server: {
+    port: 4000,
+  },
   vite: {
     resolve: {
       alias: {
@@ -24,6 +26,5 @@ export default defineConfig({
       },
     },
   },
-
   adapter: vercel(),
 })
