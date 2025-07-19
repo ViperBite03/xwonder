@@ -2,6 +2,7 @@
 export const prerender = true
 
 import Layout from '@/layouts/Layout.astro'
+import Cover from '@/modules/landing/components/Cover.vue'
 
 const description = ""
 ---
@@ -11,5 +12,5 @@ const description = ""
   subtitle="Xwonder"
   {description}
 >
-<h1>Hello World</h1>
+<Cover />
 </Layout>
